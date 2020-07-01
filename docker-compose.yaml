@@ -13,6 +13,9 @@ services:
     depends_on:
       - 'database'
       - 'api'
+    volumes:
+      - './ecommerce-client:/web'
+      - '/web/node_modules'
     ports:
       - '3000:3000'
     stdin_open: true
