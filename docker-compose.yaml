@@ -5,6 +5,10 @@ services:
     build: ecommerce-api/
     depends_on:
       - 'database'
+    volumes:
+      - './ecommerce-api:/src/app'
+      - '/src/app/node_modules'
+
     ports: 
       - '3001:3001'
 
