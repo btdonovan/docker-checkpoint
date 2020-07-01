@@ -1,31 +1,22 @@
-# What image do you want to start building on?
-FROM node:current-alpine
+# The version of Node to use
+FROM node:13.12.0-alpine
 
-# # Make a folder in your image where your app's source code can live
-# RUN mkdir -p /src/app
+# The path to application within the container. Making web directory as the work directory
+WORKDIR /web
 
-# # Tell your container where your app's source code will live
-# WORKDIR /src/app
+# Copies package.json to the Docker environment.
+COPY ./package.json /web/package.json
 
-# # What source code do you what to copy, and where to put it?
-# COPY . /src/app
+# Installs all node packages
+RUN npm install
 
+# Installs react-scripts (can skip if in package.json)
+RUN npm install react-scripts
 
-WORKDIR /app
+# Copies the code to the web directory in the Docker container
+COPY . /web/
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
-COPY . ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
-
-# add app
-
-
-# What port will the container talk to the outside world with once created?
+# Port to be exposed
 EXPOSE 3000
 
-# start app
 CMD ["npm", "start"]
